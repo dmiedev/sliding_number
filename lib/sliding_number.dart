@@ -67,9 +67,26 @@ class _SlidingDigitState extends State<_SlidingDigit> {
   @override
   void initState() {
     super.initState();
+    _slide(initialization: true);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant _SlidingDigit oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _slide();
+  }
+
+  void _slide({bool initialization = false}) {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
+      final divider = initialization ? 10 : 9;
       setState(() {
-        _digitHeight = _scrollController.position.maxScrollExtent / 10;
+        _digitHeight = _scrollController.position.maxScrollExtent / divider;
       });
       _scrollController.animateTo(
         _digitHeight * widget.digit,
@@ -80,23 +97,15 @@ class _SlidingDigitState extends State<_SlidingDigit> {
   }
 
   @override
-  void didUpdateWidget(covariant _SlidingDigit oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    _scrollController.animateTo(
-      _digitHeight * widget.digit,
-      duration: widget.duration,
-      curve: widget.curve,
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
     return IgnorePointer(
       child: ConstrainedBox(
         constraints: BoxConstraints(maxHeight: _digitHeight),
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           controller: _scrollController,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: List.generate(10, (digit) {
               return Text('$digit', style: widget.style);
             }),
