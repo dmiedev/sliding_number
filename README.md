@@ -1,5 +1,5 @@
 # sliding_number
 
-Show number change with a sliding animation.
+Show the change of a number beautifully with a dynamic sliding animation.
 
 
