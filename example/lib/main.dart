@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:math';
 
-void main() {
-  runApp(MyApp());
-}
+import 'package:flutter/material.dart';
+import 'package:sliding_number/sliding_number.dart';
+
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
@@ -25,12 +26,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _points = 0;
+  final random = Random();
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  void _incrementPoints() {
+    setState(() => _points += random.nextInt(100));
+  }
+
+  void _decrementPoints() {
+    setState(() => _points -= random.nextInt(100));
   }
 
   @override
@@ -41,22 +45,36 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+            Expanded(child: Container()),
+            Text('Your points:'),
+            SlidingNumber(
+              number: _points,
+              style: Theme.of(context).textTheme.headline3!,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeOutQuint,
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            Expanded(child: Container()),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FloatingActionButton(
+                    onPressed: _decrementPoints,
+                    tooltip: 'Decrement',
+                    child: Icon(Icons.remove),
+                  ),
+                  FloatingActionButton(
+                    onPressed: _incrementPoints,
+                    tooltip: 'Increment',
+                    child: Icon(Icons.add),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
       ),
     );
   }
