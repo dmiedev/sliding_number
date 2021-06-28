@@ -29,14 +29,16 @@ class SlidingNumber extends StatelessWidget {
     final numberString = number.abs().toString();
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: List.generate(numberString.length, (position) {
-        return _SlidingDigit(
-          digit: int.parse(numberString[position]),
-          style: style,
-          duration: duration,
-          curve: curve,
-        );
-      }),
+      children: [
+        if (number.isNegative) Text('-', style: style),
+        for (int i = 0; i < numberString.length; i++)
+          _SlidingDigit(
+            digit: int.parse(numberString[i]),
+            style: style,
+            duration: duration,
+            curve: curve,
+          ),
+      ],
     );
   }
 }
