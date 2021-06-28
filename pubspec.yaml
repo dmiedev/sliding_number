@@ -1,6 +1,6 @@
 name: sliding_number
 description: Show the change of a number beautifully with a dynamic sliding animation.
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/dmiedev/sliding_number
 
 environment:
