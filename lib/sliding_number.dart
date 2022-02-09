@@ -79,6 +79,9 @@ class _SlidingDigitState extends State<_SlidingDigit> {
   @override
   void didUpdateWidget(covariant _SlidingDigit oldWidget) {
     super.didUpdateWidget(oldWidget);
+    if(!mounted)
+      return;
+    
     _slide();
   }
 
