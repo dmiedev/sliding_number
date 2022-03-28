@@ -78,16 +78,16 @@ class _SlidingDigitState extends State<_SlidingDigit> {
 
   @override
   void didUpdateWidget(covariant _SlidingDigit oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if(!mounted)
-      return;
-    
+    super.didUpdateWidget(oldWidget);    
     _slide();
   }
 
   void _slide({bool initialization = false}) {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       final divider = initialization ? 10 : 9;
+      if(!mounted){
+        return;
+      }
       setState(() {
         _digitHeight = _scrollController.position.maxScrollExtent / divider;
       });
