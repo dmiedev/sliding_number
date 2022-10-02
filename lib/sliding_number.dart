@@ -85,6 +85,9 @@ class _SlidingDigitState extends State<_SlidingDigit> {
   void _slide({bool initialization = false}) {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       final divider = initialization ? 10 : 9;
+      if (!mounted) {
+        return;
+      }
       setState(() {
         _digitHeight = _scrollController.position.maxScrollExtent / divider;
       });
